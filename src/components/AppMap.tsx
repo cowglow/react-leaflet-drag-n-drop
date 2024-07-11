@@ -10,7 +10,7 @@ const StyledMapContainer = styled(MapContainer)`
 export default function AppMap() {
     const position: L.LatLngTuple = [51.505, -0.09]
     return (
-        <StyledMapContainer center={position} zoom={13} scrollWheelZoom={false}>
+        <StyledMapContainer center={position} zoom={13}>
             <TileLayer
                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
