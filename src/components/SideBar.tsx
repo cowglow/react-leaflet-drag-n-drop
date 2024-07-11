@@ -1,26 +1,25 @@
-import type React from "react";
 import {cloneElement} from "react";
-import {Drawer, type DrawerProps, IconButton, List, ListItem, styled} from "@mui/material";
+import {Drawer, DrawerProps, IconButton, List, ListItem, styled} from "@mui/material";
 import useMarkerType from "../hooks/use-marker-type.ts";
-import {CustomMarkers} from "../config/custom-markers.tsx";
-import {MarkerType} from "../hooks/use-custom-markers.ts";
+import {CustomMarkers, MarkerTypeKey} from "../config/custom-markers.tsx";
 
-const StyledDrawer = styled<DrawerProps>(Drawer)`
+
+const StyledDrawer = styled(Drawer)`
     & div {
         margin-top: 64px;
         bottom: 0;
     }
 `
 
-export default function SideBar(props: DrawerProps) {
-    const [markerType] = useMarkerType()
-    const [, setMarker] = useMarkerType()
+export default function SideBar({open}: DrawerProps) {
+    const {markerType} = useMarkerType()
+    const {setMarkerType} = useMarkerType()
     return (
-        <StyledDrawer variant="persistent" {...props}>
+        <StyledDrawer variant="persistent" open={open}>
             <List dense disablePadding>
                 {Object.keys(CustomMarkers).map((key, index) => (
                     <ListItem key={`marker-${index}-${key}`}>
-                        <IconButton draggable onDragStart={() => setMarker(key as MarkerType)}>
+                        <IconButton draggable onDragStart={() => setMarkerType(key as MarkerTypeKey)}>
                             {cloneElement(CustomMarkers[key], {
                                 color: key === markerType ? "primary" : "unset",
                                 fontSize: "large"

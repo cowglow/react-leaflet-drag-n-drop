@@ -1,5 +1,4 @@
 import type {JSX} from "react";
-import type {MarkerType} from "../hooks/use-custom-markers.ts";
 import AddLocationIcon from '@mui/icons-material/AddLocation';
 import AddLocationAltIcon from '@mui/icons-material/AddLocationAlt';
 import EditLocationAltIcon from '@mui/icons-material/EditLocationAlt';
@@ -10,7 +9,18 @@ import AirlineStopsIcon from '@mui/icons-material/AirlineStops';
 import ExploreIcon from '@mui/icons-material/Explore';
 import PersonPinCircleIcon from '@mui/icons-material/PersonPinCircle';
 
-export const CustomMarkers: Record<MarkerType, JSX.Element> = {
+export type MarkerTypeKey =
+    "AddLocationIcon"
+    | "AddLocationAltIcon"
+    | "EditLocationAltIcon"
+    | "LocationCityIcon"
+    | "MyLocationIcon"
+    | "NavigationIcon"
+    | "AirlineStopsIcon"
+    | "ExploreIcon"
+    | "PersonPinCircleIcon"
+
+export const CustomMarkers: Record<MarkerTypeKey, JSX.Element> = {
     "AddLocationIcon": <AddLocationIcon/>,
     "AddLocationAltIcon": <AddLocationAltIcon/>,
     "EditLocationAltIcon": <EditLocationAltIcon/>,

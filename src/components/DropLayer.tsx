@@ -8,8 +8,8 @@ import useMarkerType from "../hooks/use-marker-type.ts";
 import "../assets/leaflet-custom-style.css"
 
 export default function DropLayer() {
-    const [markerType] = useMarkerType()
-    const [markers, setMarkers] = useCustomMarkers()
+    const {markerType} = useMarkerType()
+    const {markers, setMarkers} = useCustomMarkers()
     const map = useMapEvents({})
 
     useEffect(() => {
@@ -37,7 +37,7 @@ export default function DropLayer() {
     if (!map) return null
 
     const CUSTOM_MARKER_SIZE = 50
-    return markers.map(({type, position}, index) => {
+    return [...markers].map(({type, position}, index) => {
             const customIcon = L.divIcon({
                 className: "custom-icon-override",
                 html: renderToString(cloneElement(CustomMarkers[type])),

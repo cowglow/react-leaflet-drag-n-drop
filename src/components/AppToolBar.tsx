@@ -8,7 +8,7 @@ interface AppToolBarProps extends PropsWithChildren {
 }
 
 export default function AppToolBar({children, toggleDrawer}: AppToolBarProps) {
-    const [markerType] = useMarkerType()
+    const {markerType} = useMarkerType()
 
     return (
         <AppBar position="sticky">
@@ -18,7 +18,7 @@ export default function AppToolBar({children, toggleDrawer}: AppToolBarProps) {
                         <MenuIcon/>
                     </IconButton>
                     LEAFLET-DRAG-N-DROP</Box>
-                <Box>{JSON.stringify({markerType}, null, 2)}</Box>
+                <Box>{markerType}</Box>
             </Toolbar>
             {children}
         </AppBar>
