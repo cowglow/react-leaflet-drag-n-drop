@@ -1,76 +1,33 @@
 import type React from "react";
+import {cloneElement} from "react";
 import {Drawer, type DrawerProps, IconButton, List, ListItem, styled} from "@mui/material";
-import AddLocationIcon from '@mui/icons-material/AddLocation';
-import AddLocationAltIcon from '@mui/icons-material/AddLocationAlt';
-import EditLocationAltIcon from '@mui/icons-material/EditLocationAlt';
-import LocationCityIcon from '@mui/icons-material/LocationCity';
-import MyLocationIcon from '@mui/icons-material/MyLocation';
-import NavigationIcon from '@mui/icons-material/Navigation';
-import AirlineStopsIcon from '@mui/icons-material/AirlineStops';
-import ExploreIcon from '@mui/icons-material/Explore';
-import PersonPinCircleIcon from '@mui/icons-material/PersonPinCircle';
+import useMarkerType from "../hooks/use-marker-type.ts";
+import {CustomMarkers} from "../config/custom-markers.tsx";
+import {MarkerType} from "../hooks/use-custom-markers.ts";
 
-const StyledDrawer = styled(Drawer)`
-  & div {
-    margin-top: 64px;
-    bottom: 0;
-  }
+const StyledDrawer = styled<DrawerProps>(Drawer)`
+    & div {
+        margin-top: 64px;
+        bottom: 0;
+    }
 `
 
 export default function SideBar(props: DrawerProps) {
-    const options = {
-        draggable: true,
-        onDragEnd: (e: React.DragEvent<HTMLButtonElement>) => console.log(e)
-    }
-
+    const [markerType] = useMarkerType()
+    const [, setMarker] = useMarkerType()
     return (
         <StyledDrawer variant="persistent" {...props}>
             <List dense disablePadding>
-                <ListItem>
-                    <IconButton {...options}>
-                        <AddLocationIcon fontSize="large"/>
-                    </IconButton>
-                </ListItem>
-                <ListItem>
-                    <IconButton {...options}>
-                        <AddLocationAltIcon fontSize="large"/>
-                    </IconButton>
-                </ListItem>
-                <ListItem>
-                    <IconButton {...options}>
-                        <EditLocationAltIcon fontSize="large"/>
-                    </IconButton>
-                </ListItem>
-                <ListItem>
-                    <IconButton {...options}>
-                        <LocationCityIcon fontSize="large"/>
-                    </IconButton>
-                </ListItem>
-                <ListItem>
-                    <IconButton {...options}>
-                        <MyLocationIcon fontSize="large"/>
-                    </IconButton>
-                </ListItem>
-                <ListItem>
-                    <IconButton {...options}>
-                        <NavigationIcon fontSize="large"/>
-                    </IconButton>
-                </ListItem>
-                <ListItem>
-                    <IconButton {...options}>
-                        <AirlineStopsIcon fontSize="large"/>
-                    </IconButton>
-                </ListItem>
-                <ListItem>
-                    <IconButton {...options}>
-                        <ExploreIcon/>
-                    </IconButton>
-                </ListItem>
-                <ListItem>
-                    <IconButton {...options}>
-                        <PersonPinCircleIcon/>
-                    </IconButton>
-                </ListItem>
+                {Object.keys(CustomMarkers).map((key, index) => (
+                    <ListItem key={`marker-${index}-${key}`}>
+                        <IconButton draggable onDragStart={() => setMarker(key as MarkerType)}>
+                            {cloneElement(CustomMarkers[key], {
+                                color: key === markerType ? "primary" : "unset",
+                                fontSize: "large"
+                            })}
+                        </IconButton>
+                    </ListItem>
+                ))}
             </List>
         </StyledDrawer>
     )
