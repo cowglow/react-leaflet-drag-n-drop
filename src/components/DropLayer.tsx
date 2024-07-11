@@ -1,5 +1,6 @@
 import {Marker, Popup, useMapEvents} from "react-leaflet";
 import {useEffect, useState} from "react";
+import AddReactionIcon from "@mui/icons-material/AddReaction"
 
 export default function DropLayer() {
     const [markers, setMarkers] = useState<L.LatLng[]>([])
@@ -26,6 +27,12 @@ export default function DropLayer() {
     }, [map]);
 
     if (!map) return null
+        
+    const customIcon = L.divIcon({
+        html: renderToString(<AddReactionIcon />),
+        iconSize: new L.Point(25, 25),
+        iconAnchor: [13, 46]
+    })
 
     return markers.map((marker, index) => (
             <Marker key={`marker-${index}}`} position={marker}>
